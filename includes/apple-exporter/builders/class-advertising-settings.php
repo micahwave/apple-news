@@ -29,18 +29,18 @@ class Advertising_Settings extends Builder {
 		$ad_frequency         = intval( $theme->get_value( 'ad_frequency' ) );
 
 		if ( 'yes' === $enable_advertisement && $ad_frequency > 0 ) {
+			$advertising_settings['enabled'] = true;
 			$advertising_settings['frequency'] = $ad_frequency;
 			$ad_margin                         = intval( $theme->get_value( 'ad_margin' ) );
 			if ( ! empty( $ad_margin ) ) {
 				$advertising_settings['layout'] = array(
-					'margin' => array(
-						'top'    => $ad_margin,
-						'bottom' => $ad_margin,
-					),
+					'margin' => $ad_margin,
 				);
 			}
 		}
 
-		return apply_filters( 'apple_news_advertising_settings', $advertising_settings, $this->content_id() );
+		return array(
+			'advertisement' => apply_filters( 'apple_news_advertising_settings', $advertising_settings, $this->content_id() );
+		);
 	}
 }
